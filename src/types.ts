@@ -13,7 +13,22 @@ export interface IDACResponse {
   error?: string;
 }
 
+export enum skappActionType {
+  'PUBLISH',
+  'REPUBLISH',
+  'DEPLOY',
+  'REDEPLOY',
+  'VIEWED',
+  'ACCESSED',
+  'FAVORITE',
+  'UNFAVORITE',
+  'LIKED',
+  'UNLIKED',
+  'ADD_COMMENT',
+  'EDIT_COMMENT',
+  'REMOVE_COMMENT'
+  }
 export interface IContentRecordDAC {
-  recordNewContent(...data: IContentCreation[]): Promise<IDACResponse>;
-  recordInteraction(...data: IContentInteraction[]): Promise<IDACResponse>;
+  publishApp(userid:string,appId:string,data:any): Promise<IDACResponse>;
+  deployApp(userid:string,appId:string,data:any): Promise<IDACResponse>;
 }
