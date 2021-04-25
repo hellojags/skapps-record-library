@@ -29,6 +29,6 @@ export enum skappActionType {
   'REMOVE_COMMENT'
   }
 export interface IContentRecordDAC {
-  publishApp(userid:string,appId:string,data:any): Promise<IDACResponse>;
-  deployApp(userid:string,appId:string,data:any): Promise<IDACResponse>;
+  publishApp(appId:string,data:any): Promise<IDACResponse>;
+  deployApp(appId:string,data:any): Promise<IDACResponse>;
 }

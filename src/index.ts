@@ -41,39 +41,25 @@ export class ContentRecordDAC extends DacLibrary implements IContentRecordDAC {
   }
 
   public async publishApp(
-    userid:string,
    appId:string,data:any
   ): Promise<IDACResponse> {
     if (!this.connector) {
       throw new Error("Connector not initialized");
     }
-    if(await this.checkPublishedApp(userid,appId)){
-    return await this.connector.connection
-      .remoteHandle()
-      .call("skappAction",skappActionType.REPUBLISH, appId,data );
-    }else{
       return await this.connector.connection
       .remoteHandle()
       .call("skappAction",skappActionType.PUBLISH, appId,data );
-    }
   }
 
   public async deployApp(
-    userId:string,
     appId:string,data:any
    ): Promise<IDACResponse> {
      if (!this.connector) {
        throw new Error("Connector not initialized");
      }
-     if(await this.checkDeployedApp(userId,appId)){
-      return await this.connector.connection
-        .remoteHandle()
-        .call("skappAction",skappActionType.REDEPLOY, appId,data );
-      }else{
         return await this.connector.connection
         .remoteHandle()
         .call("skappAction",skappActionType.DEPLOY, appId,data );
-      }
    }
 
   public async recordInteraction(
