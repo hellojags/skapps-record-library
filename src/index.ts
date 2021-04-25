@@ -89,7 +89,12 @@ export class ContentRecordDAC extends DacLibrary implements IContentRecordDAC {
   }
   private async checkPublishedApp(userId:string,appId:string){
     const path = DAC_DOMAIN+'/'+this.skapp+'/'+'/published/index.json';
-    let data:any = await this.downloadFile(userId,path);
+    let data:any 
+   try {
+    data=await this.downloadFile(userId,path);
+   } catch (error) {
+     data =null;
+   }
     if(data!=null && data.published!=null && data.published.contains(appId)){
       return true;
     }else{
@@ -98,7 +103,12 @@ export class ContentRecordDAC extends DacLibrary implements IContentRecordDAC {
   }
   private async checkDeployedApp(userId:string,appId:string){
     const path = DAC_DOMAIN+'/'+this.skapp+'/'+'/deployed/index.json';
-    let data:any = await this.downloadFile(userId,path);
+    let data:any 
+   try {
+    data=await this.downloadFile(userId,path);
+   } catch (error) {
+     data =null;
+   }
     if(data!=null && data.deployed!=null && data.deployed.contains(appId)){
       return true;
     }else{
