@@ -1,6 +1,6 @@
 {
-  "name": "@kbiswas/skapps-record-library",
-  "version": "0.0.3-beta",
+  "name": "@skynethub/skapps-library",
+  "version": "0.3.0-alpha",
   "description": "This library exposes a class that wraps the Skapps Record DAC, created and hosted by SkynetHub.",
   "main": "dist/index.js",
   "type": "module",
@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "post-me": "^0.4.5",
-    "skynet-js": "^4.0.3-beta",
+    "skynet-js": "^4.0.5-beta",
     "skynet-mysky-utils": "^0.1.0"
   },
   "devDependencies": {

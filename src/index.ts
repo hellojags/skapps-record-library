@@ -232,7 +232,7 @@ export class SkappsRecordDAC extends DacLibrary implements ISkappsRecordDAC {
 
   private async downloadFile<T>(userID: string, path: string): Promise<T | null> {
     if (typeof this.client === "undefined") {
-      throw Error('userprofile-library: SkynetClient not initialized')
+      throw Error('### Skapp-library ###: SkynetClient not initialized')
     }
     this.log('downloading file at path', path)
     const { data } = await this.client.file.getJSON(userID, path)
