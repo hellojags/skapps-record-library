@@ -10,7 +10,7 @@ import {
 
 const DAC_DOMAIN = "skapps.hns";
 const DEBUG_ENABLED = "true";
-export class SkappsRecordDAC extends DacLibrary implements ISkappsRecordDAC {
+export class SkappDAC extends DacLibrary implements ISkappsRecordDAC {
   private client: SkynetClient;
   
   public constructor() {
@@ -136,7 +136,7 @@ export class SkappsRecordDAC extends DacLibrary implements ISkappsRecordDAC {
         .call("skappAction",skappActionType.ADD_COMMENT, appId,data );
    }
 
-   public async getPublisedApps(
+   public async getPublishedApps(
     appIds:string[]
    ): Promise<any> {
      if (!this.connector) {

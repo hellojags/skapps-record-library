@@ -39,7 +39,7 @@ export interface ISkappsRecordDAC {
   accessedApp(appId:string): Promise<IDACResponse>;
   addComment(appId:string,data:any): Promise<IDACResponse>;
 
-  getPublisedApps(appIds:string[]): Promise<any>;
+  getPublishedApps(appIds:string[]): Promise<any>;
   getDeployedApps(appIds:string[]): Promise<any>;
   getSkappsInfo(appIds:string[]): Promise<any>;
   getSkappStats(appId:string): Promise<any>;

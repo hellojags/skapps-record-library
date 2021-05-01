@@ -3,7 +3,7 @@ import { PermCategory, Permission, PermType } from "skynet-mysky-utils";
 import { skappActionType, } from "./types";
 const DAC_DOMAIN = "skapps.hns";
 const DEBUG_ENABLED = "true";
-export class SkappsRecordDAC extends DacLibrary {
+export class SkappDAC extends DacLibrary {
     constructor() {
         super(DAC_DOMAIN);
         this.client = new SkynetClient("https://siasky.net");
@@ -87,7 +87,7 @@ export class SkappsRecordDAC extends DacLibrary {
             .remoteHandle()
             .call("skappAction", skappActionType.ADD_COMMENT, appId, data);
     }
-    async getPublisedApps(appIds) {
+    async getPublishedApps(appIds) {
         if (!this.connector) {
             throw new Error("Connector not initialized");
         }

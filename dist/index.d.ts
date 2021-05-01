@@ -1,7 +1,7 @@
 import { DacLibrary } from "skynet-js";
 import { Permission } from "skynet-mysky-utils";
 import { IContentInteraction, ISkappsRecordDAC, IDACResponse } from "./types";
-export declare class SkappsRecordDAC extends DacLibrary implements ISkappsRecordDAC {
+export declare class SkappDAC extends DacLibrary implements ISkappsRecordDAC {
     private client;
     constructor();
     getPermissions(): Permission[];
@@ -14,7 +14,7 @@ export declare class SkappsRecordDAC extends DacLibrary implements ISkappsRecord
     viewedApp(appId: string): Promise<IDACResponse>;
     accessedApp(appId: string): Promise<IDACResponse>;
     addComment(appId: string, data: any): Promise<IDACResponse>;
-    getPublisedApps(appIds: string[]): Promise<any>;
+    getPublishedApps(appIds: string[]): Promise<any>;
     getDeployedApps(appIds: string[]): Promise<IDACResponse>;
     getSkappsInfo(appIds: string[]): Promise<IDACResponse>;
     getSkappStats(appId: string): Promise<IDACResponse>;
