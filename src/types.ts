@@ -50,7 +50,7 @@ export interface IApp
   {
   id: string;
   version : string;//"version": "1",
-  prevSkylink:string ;//"prevSkylink":"",
+  prevSkylink?:string ;//"prevSkylink":"",
   ts: string;
   }
 
@@ -63,32 +63,42 @@ export interface IApp
 
   export interface IPublishAppContent extends IAppContent
   {
-    skappLogo:string;//"skappLogo": "[46 Character SKYLINK]",
+    skappLogo:IImage;//"skappLogo": "[46 Character SKYLINK]",
     demoUrl:string;//"demoUrl": "[46 Character SKYLINK]",
     age:string;//"age": "[18+|general]",
     appUrl:string;//"appUrl": "skylink URL",
-    category: string[],
-    tags: string[],
+    category: string,
+    tags?: string[],
     appStatus: string,
     appDescription: string,
-    releaseNotes: string,
-    supportDetails: string,
-    connections: ISocialConnect
+    releaseNotes?: string,
+    supportDetails?: string,
+    connections?: any,
+    previewImages?:IPreview
+    
 }
-export interface ISocialConnect {
-  twitter: string;
-  email: string;
-  discord: string;
-  }
+
+export interface IPreview {
+  aspectRatio: string,
+  images: IImage[]
+}
+
+
+export interface IImage {
+  thumbnail: string,
+  image: string
+}
+
   export interface IAppContent{
     
     storageGateway:string;//"storageGateway": "skynetportalUrl",
     hns:string;//  "hns": "skyfeed",
+    appname:string;
     skylink:string ;//  "skylink": "skylink",
     defaultPath:string; //  "defaultPath": "index.html or EMPTY",
     portalMinVersion:string; //  "portalMinVersion": "1.5",
     sourceCode:string;//  "sourceCode": "git url",
-    history: string[];//  "history": [ "list of skylinks"]
+    history?: string[];//  "history": [ "list of skylinks"]
   }
 
 export interface IAppInfo {

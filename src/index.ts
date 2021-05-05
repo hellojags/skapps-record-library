@@ -6,6 +6,8 @@ import {
   ISkappsRecordDAC,
   IDACResponse,
   skappActionType,
+  IPublishedApp,
+  IDeployedApp,
 } from "./types";
 
 const DAC_DOMAIN = "skapps.hns";
@@ -38,7 +40,7 @@ export class SkappDAC extends DacLibrary implements ISkappsRecordDAC {
   }
 
   public async publishApp(
-   appId:string,data:any
+   appId:string,data:IPublishedApp
   ): Promise<IDACResponse> {
     if (!this.connector) {
       throw new Error("Connector not initialized");
@@ -49,7 +51,7 @@ export class SkappDAC extends DacLibrary implements ISkappsRecordDAC {
   }
 
   public async deployApp(
-    appId:string,data:any
+    appId:string,data:IDeployedApp
    ): Promise<IDACResponse> {
      if (!this.connector) {
        throw new Error("Connector not initialized");
