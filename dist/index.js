@@ -23,6 +23,14 @@ export class SkappDAC extends DacLibrary {
             .remoteHandle()
             .call("skappAction", skappActionType.PUBLISH, appId, data);
     }
+    async publishedAppCount() {
+        if (!this.connector) {
+            throw new Error("Connector not initialized");
+        }
+        return await this.connector.connection
+            .remoteHandle()
+            .call("getPublishedAppsCount", null);
+    }
     async deployApp(appId, data) {
         if (!this.connector) {
             throw new Error("Connector not initialized");
@@ -94,6 +102,14 @@ export class SkappDAC extends DacLibrary {
         return await this.connector.connection
             .remoteHandle()
             .call("getPublishedApps", appIds);
+    }
+    async getPublishedAppsCount(appIds) {
+        if (!this.connector) {
+            throw new Error("Connector not initialized");
+        }
+        return await this.connector.connection
+            .remoteHandle()
+            .call("getPublishedAppsCount", appIds);
     }
     async getDeployedApps(appIds) {
         if (!this.connector) {

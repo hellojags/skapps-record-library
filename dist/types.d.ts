@@ -44,7 +44,7 @@ export interface ISkappsRecordDAC {
 export interface IApp {
     id: string;
     version: string;
-    prevSkylink: string;
+    prevSkylink?: string;
     ts: string;
 }
 export interface IDeployedApp extends IApp {
@@ -54,31 +54,36 @@ export interface IPublishedApp extends IApp {
     content: IPublishAppContent;
 }
 export interface IPublishAppContent extends IAppContent {
-    skappLogo: string;
+    skappLogo: IImage;
     demoUrl: string;
     age: string;
     appUrl: string;
-    category: string[];
-    tags: string[];
+    category: string;
+    tags?: string[];
     appStatus: string;
     appDescription: string;
-    releaseNotes: string;
-    supportDetails: string;
-    connections: ISocialConnect;
+    releaseNotes?: string;
+    supportDetails?: string;
+    connections?: any;
+    previewImages?: IPreview;
 }
-export interface ISocialConnect {
-    twitter: string;
-    email: string;
-    discord: string;
+export interface IPreview {
+    aspectRatio: string;
+    images: IImage[];
+}
+export interface IImage {
+    thumbnail: string;
+    image: string;
 }
 export interface IAppContent {
     storageGateway: string;
     hns: string;
+    appname: string;
     skylink: string;
     defaultPath: string;
     portalMinVersion: string;
     sourceCode: string;
-    history: string[];
+    history?: string[];
 }
 export interface IAppInfo {
     skylink: string;

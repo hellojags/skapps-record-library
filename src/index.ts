@@ -18,6 +18,7 @@ export class SkappDAC extends DacLibrary implements ISkappsRecordDAC {
   public constructor() {
     super(DAC_DOMAIN);
     this.client = new SkynetClient("https://siasky.net");
+    
     //const hostname = new URL(document.referrer).hostname
     
   }
@@ -39,6 +40,7 @@ export class SkappDAC extends DacLibrary implements ISkappsRecordDAC {
     ];
   }
 
+
   public async publishApp(
    appId:string,data:IPublishedApp
   ): Promise<IDACResponse> {
@@ -49,6 +51,16 @@ export class SkappDAC extends DacLibrary implements ISkappsRecordDAC {
       .remoteHandle()
       .call("skappAction",skappActionType.PUBLISH, appId,data );
   }
+
+  public async publishedAppCount(
+   ): Promise<IDACResponse> {
+     if (!this.connector) {
+       throw new Error("Connector not initialized");
+     }
+       return await this.connector.connection
+       .remoteHandle()
+       .call("getPublishedAppsCount",null );
+   }
 
   public async deployApp(
     appId:string,data:IDeployedApp
@@ -147,6 +159,17 @@ export class SkappDAC extends DacLibrary implements ISkappsRecordDAC {
         return await this.connector.connection
         .remoteHandle()
         .call("getPublishedApps", appIds );
+   }
+
+   public async getPublishedAppsCount(
+    appIds:string[]
+   ): Promise<any> {
+     if (!this.connector) {
+       throw new Error("Connector not initialized");
+     }
+        return await this.connector.connection
+        .remoteHandle()
+        .call("getPublishedAppsCount", appIds );
    }
 
    public async getDeployedApps(
