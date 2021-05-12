@@ -10,14 +10,14 @@ import {
   IDeployedApp,
 } from "./types";
 
-const DAC_DOMAIN = "skapps.hns";
+const DAC_DOMAIN = "skapp-dac.hns";
 const DEBUG_ENABLED = "true";
 export class SkappDAC extends DacLibrary implements ISkappsRecordDAC {
   private client: SkynetClient;
   
   public constructor() {
     super(DAC_DOMAIN);
-    this.client = new SkynetClient("https://siasky.net");
+    this.client = new SkynetClient();
     
     //const hostname = new URL(document.referrer).hostname
     
