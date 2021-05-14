@@ -161,6 +161,27 @@ export class SkappDAC extends DacLibrary implements ISkappsRecordDAC {
         .call("getPublishedApps", appIds );
    }
 
+   public async getPublishedAppsByUserIds(
+    userIds:string[]
+   ): Promise<any> {
+     if (!this.connector) {
+       throw new Error("Connector not initialized");
+     }
+        return await this.connector.connection
+        .remoteHandle()
+        .call("getPublishedAppsByUserId", userIds );
+   }
+
+   public async getPublishedAppDetailsByUserId(
+    userId:string,appId:string
+   ): Promise<any> {
+     if (!this.connector) {
+       throw new Error("Connector not initialized");
+     }
+        return await this.connector.connection
+        .remoteHandle()
+        .call("getPublishedAppDetailByUserId", userId, appId );
+   }
    public async getPublishedAppsCount(
     appIds:string[]
    ): Promise<any> {

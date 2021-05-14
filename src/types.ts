@@ -44,7 +44,8 @@ export interface ISkappsRecordDAC {
   getSkappsInfo(appIds:string[]): Promise<any>;
   getSkappStats(appId:string): Promise<any>;
   getSkappComments(appId:string): Promise<any>;
-
+  getPublishedAppDetailsByUserId(    userId:string,appId:string   ): Promise<any> ;
+  getPublishedAppsByUserIds( userIds:string[] ): Promise<any>;
 }
 export interface IApp
   {
