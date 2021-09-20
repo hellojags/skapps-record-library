@@ -1,12 +1,12 @@
 import { DacLibrary, SkynetClient } from "skynet-js";
 import { PermCategory, Permission, PermType } from "skynet-mysky-utils";
-import { skappActionType, } from "./types";
-const DAC_DOMAIN = "skapps.hns";
+import { skappActionType } from "./types";
+const DAC_DOMAIN = "skapp-dac.hns";
 const DEBUG_ENABLED = "true";
 export class SkappDAC extends DacLibrary {
     constructor() {
         super(DAC_DOMAIN);
-        this.client = new SkynetClient("https://siasky.net");
+        this.client = new SkynetClient();
         //const hostname = new URL(document.referrer).hostname
     }
     getPermissions() {
@@ -15,34 +15,65 @@ export class SkappDAC extends DacLibrary {
             new Permission(DAC_DOMAIN, DAC_DOMAIN, PermCategory.Discoverable, PermType.Write),
         ];
     }
-    async publishApp(appId, data) {
+    // #####################################################################################
+    // ###################### Deployment Methods ###########################################
+    // #####################################################################################
+    async setDeployment(data) {
         if (!this.connector) {
             throw new Error("Connector not initialized");
         }
+        this.log('calling setDeployment AppId ' + data.appId);
         return await this.connector.connection
             .remoteHandle()
-            .call("skappAction", skappActionType.PUBLISH, appId, data);
+            .call("setDeployment", data);
     }
-    async publishedAppCount() {
+    async getDeployments(appIds) {
         if (!this.connector) {
             throw new Error("Connector not initialized");
         }
+        this.log('calling getDeployments appIds ' + appIds);
         return await this.connector.connection
             .remoteHandle()
-            .call("getPublishedAppsCount", null);
+            .call("getDeployments", appIds);
     }
-    async deployApp(appId, data) {
+    // #####################################################################################
+    // ###################### PublishApp Methods ###########################################
+    // #####################################################################################
+    async setPublishedApp(data) {
         if (!this.connector) {
             throw new Error("Connector not initialized");
         }
+        this.log('calling setPublishedApp AppId ' + data.appId);
         return await this.connector.connection
             .remoteHandle()
-            .call("skappAction", skappActionType.DEPLOY, appId, data);
+            .call("setPublishedApp", data);
     }
+    async getPublishedApps(appIds, userId) {
+        if (!this.connector) {
+            throw new Error("Connector not initialized");
+        }
+        this.log('calling getPublishedApps appIds ' + appIds);
+        return await this.connector.connection
+            .remoteHandle()
+            .call("getPublishedApps", appIds, userId);
+    }
+    async getPublishedAppIds(userId) {
+        if (!this.connector) {
+            throw new Error("Connector not initialized");
+        }
+        this.log('calling getPublishedApps userId ' + userId);
+        return await this.connector.connection
+            .remoteHandle()
+            .call("getPublishedApps", userId);
+    }
+    // #####################################################################################
+    // ###################### PublishApp Stats / Interactions Methods ######################
+    // #####################################################################################
     async likeApp(appId) {
         if (!this.connector) {
             throw new Error("Connector not initialized");
         }
+        this.log('calling skappAction ' + skappActionType.LIKED);
         return await this.connector.connection
             .remoteHandle()
             .call("skappAction", skappActionType.LIKED, appId);
@@ -51,6 +82,7 @@ export class SkappDAC extends DacLibrary {
         if (!this.connector) {
             throw new Error("Connector not initialized");
         }
+        this.log('calling skappAction ' + skappActionType.UNLIKED);
         return await this.connector.connection
             .remoteHandle()
             .call("skappAction", skappActionType.UNLIKED, appId);
@@ -59,6 +91,7 @@ export class SkappDAC extends DacLibrary {
         if (!this.connector) {
             throw new Error("Connector not initialized");
         }
+        this.log('calling skappAction ' + skappActionType.FAVORITE);
         return await this.connector.connection
             .remoteHandle()
             .call("skappAction", skappActionType.FAVORITE, appId);
@@ -67,6 +100,7 @@ export class SkappDAC extends DacLibrary {
         if (!this.connector) {
             throw new Error("Connector not initialized");
         }
+        this.log('calling skappAction ' + skappActionType.UNFAVORITE);
         return await this.connector.connection
             .remoteHandle()
             .call("skappAction", skappActionType.UNFAVORITE, appId);
@@ -75,6 +109,7 @@ export class SkappDAC extends DacLibrary {
         if (!this.connector) {
             throw new Error("Connector not initialized");
         }
+        this.log('calling skappAction ' + skappActionType.VIEWED);
         return await this.connector.connection
             .remoteHandle()
             .call("skappAction", skappActionType.VIEWED, appId);
@@ -83,119 +118,49 @@ export class SkappDAC extends DacLibrary {
         if (!this.connector) {
             throw new Error("Connector not initialized");
         }
+        this.log('calling skappAction ' + skappActionType.ACCESSED);
         return await this.connector.connection
             .remoteHandle()
             .call("skappAction", skappActionType.ACCESSED, appId);
     }
-    async addComment(appId, data) {
+    async getStats(appIds, userId) {
         if (!this.connector) {
             throw new Error("Connector not initialized");
         }
+        this.log('calling getSkappStats appIds ' + appIds);
         return await this.connector.connection
             .remoteHandle()
-            .call("skappAction", skappActionType.ADD_COMMENT, appId, data);
+            .call("getSkappStats", appIds, userId);
     }
-    async getPublishedApps(appIds) {
-        if (!this.connector) {
-            throw new Error("Connector not initialized");
-        }
-        return await this.connector.connection
-            .remoteHandle()
-            .call("getPublishedApps", appIds);
-    }
-    async getPublishedAppsCount(appIds) {
-        if (!this.connector) {
-            throw new Error("Connector not initialized");
-        }
-        return await this.connector.connection
-            .remoteHandle()
-            .call("getPublishedAppsCount", appIds);
-    }
-    async getDeployedApps(appIds) {
-        if (!this.connector) {
-            throw new Error("Connector not initialized");
-        }
-        return await this.connector.connection
-            .remoteHandle()
-            .call("getDeployedApps", appIds);
-    }
-    async getSkappsInfo(appIds) {
-        if (!this.connector) {
-            throw new Error("Connector not initialized");
-        }
-        return await this.connector.connection
-            .remoteHandle()
-            .call("getSkappsInfo", appIds);
-    }
-    async getSkappStats(appId) {
-        if (!this.connector) {
-            throw new Error("Connector not initialized");
-        }
-        return await this.connector.connection
-            .remoteHandle()
-            .call("getSkappStats", appId);
-    }
-    async getSkappComments(appId) {
-        if (!this.connector) {
-            throw new Error("Connector not initialized");
-        }
-        return await this.connector.connection
-            .remoteHandle()
-            .call("getSkappComments", appId);
-    }
-    async recordInteraction(...data) {
-        if (!this.connector) {
-            throw new Error("Connector not initialized");
-        }
-        return await this.connector.connection
-            .remoteHandle()
-            .call("recordInteraction", ...data);
-    }
-    // private async checkPublishedApp(userId:string,appId:string){
-    //   const path = DAC_DOMAIN+'/'+this.skapp+'/'+'/published/index.json';
-    //   let data:any 
-    //  try {
-    //   data=await this.downloadFile(userId,path);
-    //  } catch (error) {
-    //    data =null;
-    //  }
-    //   if(data!=null && data.published!=null && data.published.contains(appId)){
-    //     return true;
-    //   }else{
-    //     return false;
+    // #####################################################################################
+    // ############################ Review Below Methods ###################################
+    // #####################################################################################
+    // public async addComment(
+    //   appId: string, data: any
+    // ): Promise<IDACResponse> {
+    //   if (!this.connector) {
+    //     throw new Error("Connector not initialized");
     //   }
+    //   this.log('calling skappAction ' + skappActionType.ADD_COMMENT);
+    //   return await this.connector.connection
+    //     .remoteHandle()
+    //     .call("skappAction", skappActionType.ADD_COMMENT, appId, data);
     // }
-    // private async checkDeployedApp(userId:string,appId:string){
-    //   const path = DAC_DOMAIN+'/'+this.skapp+'/'+'/deployed/index.json';
-    //   let data:any 
-    //  try {
-    //   data=await this.downloadFile(userId,path);
-    //  } catch (error) {
-    //    data =null;
-    //  }
-    //   if(data!=null && data.deployed!=null && data.deployed.contains(appId)){
-    //     return true;
-    //   }else{
-    //     return false;
+    // public async getSkappComments(
+    //   appId: string
+    // ): Promise<IDACResponse> {
+    //   if (!this.connector) {
+    //     throw new Error("Connector not initialized");
     //   }
+    //   this.log('calling getSkappComments appId ' + appId);
+    //   return await this.connector.connection
+    //     .remoteHandle()
+    //     .call("getSkappComments", appId);
     // }
-    async downloadFile(userID, path) {
-        if (typeof this.client === "undefined") {
-            throw Error('### Skapp-library ###: SkynetClient not initialized');
-        }
-        this.log('downloading file at path', path);
-        const { data } = await this.client.file.getJSON(userID, path);
-        if (!data) {
-            this.log('no data found at path', path);
-            return null;
-        }
-        this.log('data found at path', path, data);
-        return data;
-    }
     // log prints to stdout only if DEBUG_ENABLED flag is set
     log(message, ...optionalContext) {
         if (DEBUG_ENABLED) {
-            console.log("UserProfileDAC Library :: " + message, ...optionalContext);
+            console.log("### SKAPP-LIBRARAY (DEBUG) ### " + message, ...optionalContext);
         }
     }
 }
